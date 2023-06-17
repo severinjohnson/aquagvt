@@ -1,11 +1,21 @@
-from flask import Flask
+from django.http import HttpResponse
+from django.urls import path
+from django.core.wsgi import get_wsgi_application
+import os
 
-app = Flask(__name__)
+def hello(request):
+    return HttpResponse("Hello, World!")
 
-@app.route('/')
-def hello():
-    return "Hello, World!"
+urlpatterns = [
+    path('', hello),
+]
 
-if __name__ == '__main__':
-    app.run()
+# Set the application settings
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', '__main__')
 
+# Create the application instance
+application = get_wsgi_application()
+
+if __name__ == "__main__":
+    from django.core.management import execute_from_command_line
+    execute_from_command_line()
