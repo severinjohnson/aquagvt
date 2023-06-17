@@ -28,9 +28,7 @@ jobs:
           source venv/bin/activate
       
       - name: Install dependencies
-        run: |
-          pip install -r requirements.txt
-          pip install gunicorn
+        run: pip install -r requirements.txt
           
       # Optional: Add step to run tests here (PyTest, Django test suites, etc.)
       
@@ -59,5 +57,5 @@ jobs:
           app-name: 'aquaGVT'
           slot-name: 'Production'
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_9DFB9CC4E49F4F538464CEF181140B1C }}
-          startup-command: 'gunicorn app:app --bind=0.0.0.0:${{ env.PORT }}'
+          startup-command: 'python main.py'
 
