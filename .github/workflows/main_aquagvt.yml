@@ -57,5 +57,5 @@ jobs:
           app-name: 'aquaGVT'
           slot-name: 'Production'
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_9DFB9CC4E49F4F538464CEF181140B1C }}
-          startup-command: 'python main.py'
+  
 
