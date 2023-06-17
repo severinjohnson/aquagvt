@@ -1,21 +1,32 @@
-from django.http import HttpResponse
-from django.urls import path
-from django.core.wsgi import get_wsgi_application
 import os
 
-def hello(request):
-    return HttpResponse("Hello, World!")
+from flask import (Flask, redirect, render_template, request,
+                   send_from_directory, url_for)
 
-urlpatterns = [
-    path('', hello),
-]
+app = Flask(__name__)
 
-# Set the application settings
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', '__main__')
 
-# Create the application instance
-application = get_wsgi_application()
+@app.route('/')
+def index():
+   print('Request for index page received')
+   return render_template('index.html')
 
-if __name__ == "__main__":
-    from django.core.management import execute_from_command_line
-    execute_from_command_line()
+@app.route('/favicon.ico')
+def favicon():
+    return send_from_directory(os.path.join(app.root_path, 'static'),
+                               'favicon.ico', mimetype='image/vnd.microsoft.icon')
+
+@app.route('/hello', methods=['POST'])
+def hello():
+   name = request.form.get('name')
+
+   if name:
+       print('Request for hello page received with name=%s' % name)
+       return render_template('hello.html', name = name)
+   else:
+       print('Request for hello page received with no name or blank name -- redirecting')
+       return redirect(url_for('index'))
+
+
+if __name__ == '__main__':
+   app.run()
